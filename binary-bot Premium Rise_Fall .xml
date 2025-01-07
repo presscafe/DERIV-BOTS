@@ -95,9 +95,93 @@
       </block>
       <block type="procedures_callnoreturn" id="risk_init">
         <mutation name="Initialize Risk Parameters"></mutation>
+        <value name="ARG0">
+          <block type="math_number">
+            <field name="NUM">25</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="math_number">
+            <field name="NUM">15</field>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="math_number">
+            <field name="NUM">0.15</field>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="math_number">
+            <field name="NUM">1.3</field>
+          </block>
+        </value>
+        <value name="ARG4">
+          <block type="math_number">
+            <field name="NUM">2</field>
+          </block>
+        </value>
       </block>
     </statement>
     <statement name="SUBMARKET">
+      <block type="controls_if">
+        <mutation elseif="3"></mutation>
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">GT</field>
+            <value name="A">
+              <block type="variables_get">
+                <field name="VAR" id="new_consec_losses" variabletype="">Consecutive Losses</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="notify">
+            <field name="NOTIFICATION_TYPE">warn</field>
+            <value name="MESSAGE">
+              <block type="text">
+                <field name="TEXT">Stopping after consecutive losses - waiting for better conditions</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <value name="IF1">
+          <block type="logic_compare">
+            <field name="OP">LT</field>
+            <value name="A">
+              <block type="rsi">
+                <value name="INPUT">
+                  <block type="ticks"></block>
+                </value>
+                <value name="PERIOD">
+                  <block type="math_number">
+                    <field name="NUM">14</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <field name="NUM">40</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO1">
+          <block type="notify">
+            <field name="NOTIFICATION_TYPE">info</field>
+            <value name="MESSAGE">
+              <block type="text">
+                <field name="TEXT">Market conditions unfavorable - waiting</field>
+              </block>
+            </value>
+          </block>
+        </statement>
       <block type="tradeOptions" id="x=V33~4Lb|(sLv`J[:Eb">
         <field name="DURATIONTYPE_LIST">t</field>
         <field name="CURRENCY_LIST">USD</field>
